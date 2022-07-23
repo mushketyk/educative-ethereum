@@ -1,1 +1,1 @@
-# ethereum-educative
+# educative-ethereum
