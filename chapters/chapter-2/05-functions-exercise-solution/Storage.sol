@@ -19,13 +19,13 @@ contract Storage {
         number++;
     }
 
-    function currentAndDiff() public view returns(uint currentNumber, uint difference) {
+    function currentAndDiff() public view returns(uint currentNumber, int difference) {
 
         // We can assign values without using the "return" statement
         // currentNumber = number;
-        // difference = number - initialNumber;
+        // difference = int(number) - int(initialNumber);
         
         // Or we can return a tuple
-        return (number, number - initialNumber);
+        return (number, int(number) - int(initialNumber));
     }
 }
