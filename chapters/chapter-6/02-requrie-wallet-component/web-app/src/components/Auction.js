@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Card, CardContent, Grid, Typography } from '@mui/material';
-import BidInput from './BidInput'
+import React, { useState } from 'react';
+import BidInput from './BidInput';
 
 export default function Auction() {
 

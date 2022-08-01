@@ -1,19 +1,18 @@
-import React from 'react'
+import HomeIcon from '@mui/icons-material/Home'
 import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import HomeIcon from '@mui/icons-material/Home'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import React from 'react'
 
 import {
-  Link,
+  Link
 } from 'react-router-dom'
 
 export default function Header() {
-
   return (
     <AppBar position='static'>
       <Toolbar>

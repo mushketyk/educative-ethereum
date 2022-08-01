@@ -24,7 +24,7 @@ const theme = createTheme({
   }
 })
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CacheProvider value={cache}>
@@ -46,5 +46,3 @@ function App() {
     </ThemeProvider>
   )
 }
-
-export default App

@@ -1,6 +1,5 @@
-import React from 'react'
-
 import { Alert } from '@mui/material';
+import React from 'react';
 
 export default function RequireWallet({ children }) {
   if (!isWalletPluginInstalled()) {

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import OutlinedInput from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import OutlinedInput from '@mui/material/TextField';
+import React, { useState } from 'react';
 
 export default function BidInput(props) {
   const [bidAmount, setBidAmount] = useState('')
@@ -22,7 +22,6 @@ export default function BidInput(props) {
     <>
       <Box sx={{ my: 2 }}>
         <OutlinedInput
-          id='outlined-adornment-amount'
           value={bidAmount}
           onChange={(event) => setBidAmount(event.target.value)}
           label='Amount'
@@ -34,7 +33,7 @@ export default function BidInput(props) {
       <Button
         variant='contained'
         onClick={() => {
-            alert('TODO: Implement bidding')
+          alert('TODO: Implement bidding')
         }}
         disabled={bidAmount === '' || !validBid}
       >

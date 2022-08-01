@@ -1,9 +1,9 @@
-import React from 'react'
 import { Grid } from '@mui/material'
 import PropTypes from 'prop-types'
+import React from 'react'
 import './Layout.css'
 
-function Layout(props) {
+export default function Layout(props) {
   const { children } = props
   return (
     <Grid
@@ -25,5 +25,3 @@ Layout.propTypes = {
     PropTypes.node,
   ]).isRequired,
 }
-
-export default Layout

@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import OutlinedInput from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
-import {
-  useNavigate,
-} from 'react-router-dom'
 import { Box } from '@mui/material';
+import Button from '@mui/material/Button';
+import OutlinedInput from '@mui/material/TextField';
+import React, { useState } from 'react';
+import {
+  useNavigate
+} from 'react-router-dom';
 
 
 export default function Auction() {

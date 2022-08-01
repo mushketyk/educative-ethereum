@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import Web3 from 'web3'
-
-import OutlinedInput from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { getAuctionContract, etherToWei } from '../web3/utils';
+import OutlinedInput from '@mui/material/TextField';
+import React, { useState } from 'react';
+import Web3 from 'web3';
+import { etherToWei, getAuctionContract } from '../web3/utils';
 
 export default function BidInput(props) {
   const [bidAmount, setBidAmount] = useState('')
@@ -27,7 +26,7 @@ export default function BidInput(props) {
     const web3 = new Web3(window.ethereum)
     const amount = etherToWei(bidAmount)
 
-    const contract = getAuctionContract(web3, contractAddress) 
+    const contract = getAuctionContract(web3, contractAddress)
 
     await contract.methods.placeBid().send({
         value: amount,
@@ -51,7 +50,6 @@ export default function BidInput(props) {
     <>
       <Box sx={{ my: 2 }}>
         <OutlinedInput
-          id='outlined-adornment-amount'
           value={bidAmount}
           onChange={(event) => setBidAmount(event.target.value)}
           label='Amount'
@@ -63,7 +61,7 @@ export default function BidInput(props) {
       <Button
         variant='contained'
         onClick={() => {
-            onContribute()
+          onContribute()
         }}
         disabled={bidAmount === '' || !validBid}
       >

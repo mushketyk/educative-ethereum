@@ -1,11 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react'
 import { Alert, Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
-import BidInput from './BidInput'
-import Web3 from 'web3'
+import React, { useEffect, useState, useMemo } from 'react';
 import {
-  useParams,
-} from 'react-router-dom'
+  useParams
+} from 'react-router-dom';
+import Web3 from 'web3';
 import { getAuctionContract, weiToEther } from '../web3/utils';
+import BidInput from './BidInput';
 
 export default function Auction() {
 
@@ -67,8 +67,6 @@ export default function Auction() {
       </>
     )
   }
-
-  console.log('Current account: ', currentAccount)
 
   return (
     <>

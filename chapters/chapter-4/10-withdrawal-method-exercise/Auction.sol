@@ -77,11 +77,11 @@ contract Auction {
         if (highestBidder == address(0x0)) {
             ownable.transferOwnership(beneficiary);
         } else {
-            uint highestBid = totalBids[highestBidder];
+            uint highestBidAmount = totalBids[highestBidder];
             totalBids[highestBidder] = 0;
 
             ownable.transferOwnership(highestBidder);
-            payable(beneficiary).transfer(highestBid);
+            payable(beneficiary).transfer(highestBidAmount);
         }
     }
 
