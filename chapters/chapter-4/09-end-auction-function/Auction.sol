@@ -18,6 +18,7 @@ contract Auction {
     AuctionState public state = AuctionState.INITIALIZED;
     mapping(address => uint) public totalBids;
     address public highestBidder;
+    uint public totalBidsNum;
 
     modifier onlyState(AuctionState expectedState) {
         require(state == expectedState, "Invalid state");
@@ -58,8 +59,13 @@ contract Auction {
             });
         }
 
+        totalBidsNum += 1;
         totalBids[msg.sender] = totalBid;
         highestBidder = msg.sender;
+    }
+
+    function highestBid() public view returns(uint) {
+        return totalBids[highestBidder];
     }
 
     function currentTime() public view returns(uint) {
