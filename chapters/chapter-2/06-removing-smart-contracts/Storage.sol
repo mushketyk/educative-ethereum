@@ -28,4 +28,8 @@ contract Storage {
         // Or we can return a tuple
         return (number, number > initialNumber);
     }
+
+    function removeContract(address sendTo) public {
+        selfdestruct(payable(sendTo));
+    }
 }

@@ -15,5 +15,5 @@ contract Storage {
 
     // TODO: Add an increment function
 
-    // TODO: Add a function that returns current number, and a difference between current number and init number
+    // TODO: Add a function that returns current number, and if current value is greater than the initial value
 }
