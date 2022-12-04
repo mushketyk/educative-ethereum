@@ -43,21 +43,6 @@ contract('Auction', function (accounts) {
     expect(await ownable.isOwner.call({ from: beneficiary })).to.equal(true)
   })
 
-  it('assigns ownership to the highest bidder', async function () {
-    await ownable.transferOwnership(auction.address, { from: beneficiary })
-    await auction.startAuction(10, { from: beneficiary })
-    auction.placeBid({
-      from: accounts[1],
-      value: web3.toWei(1, 'ether')
-    });
-
-    await advanceTime(120)
-    await mineBlock()
-
-    await auction.endAuction({ from: beneficiary })
-    expect(await ownable.isOwner.call({ from: beneficiary })).to.equal(true)
-  })
-
   it('emits an event when an auction is finished', async function () {
     await ownable.transferOwnership(auction.address, { from: beneficiary })
     await auction.startAuction(10, { from: beneficiary })
@@ -74,12 +59,28 @@ contract('Auction', function (accounts) {
     expect(eventArgs.ownable.toString()).to.equal(ownable.address)
   })
 
-  // TODO: Implement a test where a single bidder contributes
+  it('assigns ownership to the highest bidder', async function () {
+    // We need to pass numbers as strings to avoid precision errors
+    const oneEth = web3.utils.toWei('1', 'ether')
 
-  // List of steps in the test
-  // Assign ownership to the ownership
-  // Start an auction
-  // Contribute 
+    await ownable.transferOwnership(auction.address, { from: beneficiary })
+    await auction.startAuction(100, { from: beneficiary })
+    await auction.placeBid({
+      from: accounts[1],
+      value: oneEth
+    });
+
+    await advanceTime(120)
+    await mineBlock()
+
+    const balanceBefore = await web3.eth.getBalance(beneficiary)
+    await auction.endAuction({ from: accounts[2] })
+    const balanceAfter = await web3.eth.getBalance(beneficiary)
+    const diff = balanceAfter - balanceBefore;
+
+    expect(diff.toString()).to.equal(oneEth)
+    expect(await ownable.isOwner.call({ from: accounts[1] })).to.equal(true)
+  })
 
   async function advanceTime(advanceBySec) {
     return new Promise((resolve, reject) => {
