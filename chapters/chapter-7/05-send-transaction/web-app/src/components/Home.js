@@ -1,11 +1,8 @@
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/TextField';
-import React, { useState } from 'react';
-import {
-  useNavigate
-} from 'react-router-dom';
-
+import { Box } from '@mui/material'
+import Button from '@mui/material/Button'
+import OutlinedInput from '@mui/material/TextField'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Auction() {
   const navigate = useNavigate()
@@ -18,12 +15,12 @@ export default function Auction() {
           id='outlined-adornment-amount'
           value={address}
           onChange={(event) => setAddress(event.target.value)}
-          label='Address'
+          label="Address"
           fullWidth
         />
       </Box>
       <Button
-        variant='contained'
+        variant="contained"
         onClick={() => {
           navigate(`/auctions/${address}`)
         }}

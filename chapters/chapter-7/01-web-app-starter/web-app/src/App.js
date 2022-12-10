@@ -11,9 +11,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 
+// Configure CSS
 const cache = createCache({
   key: 'css',
-  prepend: true,
+  prepend: true
 })
 
 const theme = createTheme({
@@ -28,17 +29,14 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CacheProvider value={cache}>
-        <div className='App'>
+        <div className="App">
           <CssBaseline />
           <Header />
           <Layout>
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/auctions/:address' element={<Auction />} />
-              <Route
-                path='*'
-                element={<NotFound />}
-              />
+              <Route path="/" element={<Home />} />
+              <Route path="/auctions/:address" element={<Auction />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
         </div>

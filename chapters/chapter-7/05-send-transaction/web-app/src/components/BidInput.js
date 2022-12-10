@@ -1,48 +1,48 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/TextField';
-import React, { useState } from 'react';
-import Web3 from 'web3';
-import { etherToWei, getAuctionContract } from '../web3/utils';
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import OutlinedInput from '@mui/material/TextField'
+import React, { useState } from 'react'
+import Web3 from 'web3'
+import { etherToWei, getAuctionContract } from '../web3/utils'
 
 export default function BidInput(props) {
   const [bidAmount, setBidAmount] = useState('')
 
-  const {
-    contractState,
-    contractAddress,
-    currentAccount
-  } = props
+  const { contractState, contractAddress, currentAccount } = props
 
   function isValidNumber(num) {
-    return !isNaN(num);
+    return !isNaN(num)
   }
 
   function canBeWinningBid() {
-    return Number(bidAmount) + contractState.accountBid > contractState.highestBid
+    return (
+      Number(bidAmount) + contractState.accountBid > contractState.highestBid
+    )
   }
 
-  async function onContribute(event) {
+  // Create and send a transaction to an auction smart contract
+  async function onBid(event) {
     const web3 = new Web3(window.ethereum)
     const amount = etherToWei(bidAmount)
 
     const contract = getAuctionContract(web3, contractAddress)
 
-    await contract.methods.placeBid().send({
+    await contract.methods
+      .placeBid()
+      .send({
         value: amount,
-        from: currentAccount,
-    })
-      .once('transactionHash', function(hash) {
+        from: currentAccount
+      })
+      .once('transactionHash', function (hash) {
         console.log('Transaction hash received', hash)
       })
-      .once('receipt', function(receipt) {
+      .once('receipt', function (receipt) {
         console.log('Transaction receipt received', receipt)
       })
-      .on('confirmation', function(confNumber, receipt) {
+      .on('confirmation', function (confNumber, receipt) {
         console.log('Confirmation', confNumber)
       })
   }
-
 
   const validBid = isValidNumber(bidAmount) && canBeWinningBid()
 
@@ -52,20 +52,21 @@ export default function BidInput(props) {
         <OutlinedInput
           value={bidAmount}
           onChange={(event) => setBidAmount(event.target.value)}
-          label='Amount'
+          label="Amount"
           fullWidth
           error={bidAmount !== '' && !validBid}
         />
       </Box>
 
       <Button
-        variant='contained'
+        variant="contained"
         onClick={() => {
-          onContribute()
+          // Send a bid when the button is clicked
+          onBid()
         }}
         disabled={bidAmount === '' || !validBid}
       >
-        Contribute
+        Bid
       </Button>
     </>
   )

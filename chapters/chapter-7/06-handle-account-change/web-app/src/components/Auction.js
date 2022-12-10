@@ -1,22 +1,28 @@
-import { Alert, Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState, useMemo } from 'react';
 import {
-  useParams
-} from 'react-router-dom';
-import Web3 from 'web3';
-import { getAuctionContract, weiToEther } from '../web3/utils';
-import BidInput from './BidInput';
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Typography
+} from '@mui/material'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import Web3 from 'web3'
+import { getAuctionContract, weiToEther } from '../web3/utils'
+import BidInput from './BidInput'
 
 export default function Auction() {
-
   const [contractState, setContractInfo] = useState({
     highestBid: 1.2,
     totalBids: 85,
     deadline: Date.now() / 1000,
-    accountBid: 1,
+    accountBid: 1
   })
+  // Current account in MetaMask
   const [currentAccount, setCurrentAccount] = useState(null)
-  const { address } = useParams();
+  const { address } = useParams()
 
   const web3 = useMemo(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -29,32 +35,37 @@ export default function Auction() {
     return new Web3(window.ethereum)
   }, [])
 
+  async function connectWallet() {
+    // Start the connect to MetaMask process
+    const accounts = await web3.eth.requestAccounts()
+    setCurrentAccount(accounts[0])
+  }
+
+  // Get current account if the application is already connected
   async function getCurrentAccount() {
     const accounts = await web3.eth.getAccounts()
     setCurrentAccount(accounts[0])
   }
 
-  async function connectWallet() {
-    const accounts = await web3.eth.requestAccounts()
-    setCurrentAccount(accounts[0])
-  }
-
-  useEffect(() =>  {
-    // We can't use "async/await" in "useEffect" so we should move
+  // Will be executed when a component is rendered
+  useEffect(() => {
+    // We can't use "async/await" in the "useEffect" so we should move
     // it to a separate function
     getCurrentAccount()
   })
 
   useEffect(() => {
     async function getCampaign(address) {
-      if (!currentAccount) return;
+      if (!currentAccount) return
 
       const contract = getAuctionContract(web3, address)
 
       const highestBid = weiToEther(await contract.methods.highestBid().call())
       const totalBids = await contract.methods.totalBidsNum().call()
       const deadline = await contract.methods.deadline().call()
-      const accountBid = weiToEther(await contract.methods.totalBids(currentAccount).call())
+      const accountBid = weiToEther(
+        await contract.methods.totalBids(currentAccount).call()
+      )
 
       setContractInfo({
         highestBid: highestBid,
@@ -66,17 +77,23 @@ export default function Auction() {
     getCampaign(address)
   }, [web3, address, currentAccount])
 
+  // Render "Connect Wallet" button if the application is not connected.
   if (!currentAccount) {
     return (
       <>
         <Box sx={{ my: 2 }}>
-          <Alert severity='info'>You need to first connect your Ethereum wallet to use the auction.</Alert>
+          <Alert severity="info">
+            You need to first connect your Ethereum wallet to use the auction.
+          </Alert>
         </Box>
-        <Button variant='contained' onClick={() => connectWallet()}>Connect Wallet</Button>
+        <Button variant="contained" onClick={() => connectWallet()}>
+          Connect Wallet
+        </Button>
       </>
     )
   }
 
+  // Render the auction's UI if the application is already connected
   return (
     <>
       {renderContractState(contractState)}
@@ -91,67 +108,59 @@ function renderContractState(contractState) {
       <Grid item md={6}>
         <Card>
           <CardContent>
-            <Typography
-              color='textSecondary'
-              variant='overline'
-            >
+            <Typography color="textSecondary" variant="overline">
               Highest bid
             </Typography>
-            <Typography variant='h4'>{contractState.highestBid} ETH</Typography>
+            <Typography variant="h4">{contractState.highestBid} ETH</Typography>
           </CardContent>
         </Card>
       </Grid>
       <Grid item md={6}>
         <Card>
           <CardContent>
-            <Typography
-              color='textSecondary'
-              variant='overline'
-            >
+            <Typography color="textSecondary" variant="overline">
               Total bids
             </Typography>
-            <Typography variant='h4'>{contractState.totalBids}</Typography>
+            <Typography variant="h4">{contractState.totalBids}</Typography>
           </CardContent>
         </Card>
       </Grid>
       <Grid item md={6}>
         <Card>
           <CardContent>
-            <Typography
-              color='textSecondary'
-              variant='overline'
-            >
+            <Typography color="textSecondary" variant="overline">
               Ends at
             </Typography>
-            <Typography variant='h4'>{formatDate(contractState.deadline)}</Typography>
+            <Typography variant="h4">
+              {formatDate(contractState.deadline)}
+            </Typography>
           </CardContent>
         </Card>
       </Grid>
       <Grid item md={6}>
         <Card>
           <CardContent>
-            <Typography
-              color='textSecondary'
-              variant='overline'
-            >
+            <Typography color="textSecondary" variant="overline">
               You've contributed
             </Typography>
-            <Typography variant='h4'>{contractState.accountBid} ETH</Typography>
+            <Typography variant="h4">{contractState.accountBid} ETH</Typography>
           </CardContent>
         </Card>
       </Grid>
-   </Grid>
+    </Grid>
   )
 }
 
 function formatDate(seconds) {
-  return new Date(seconds * 1000).toISOString().substring(0,16)
+  return new Date(seconds * 1000).toISOString().substring(0, 16)
 }
 
 function renderInputs(contractState, currentAccount, contractAddress) {
-  return <BidInput
-    contractState={contractState}
-    currentAccount={currentAccount}
-    contractAddress={contractAddress}
-  />
+  return (
+    <BidInput
+      contractState={contractState}
+      currentAccount={currentAccount}
+      contractAddress={contractAddress}
+    />
+  )
 }

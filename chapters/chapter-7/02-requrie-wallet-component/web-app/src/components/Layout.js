@@ -6,13 +6,8 @@ import './Layout.css'
 export default function Layout(props) {
   const { children } = props
   return (
-    <Grid
-      container
-      className='content'
-      spacing={2}
-      justifyContent='center'
-    >
-      <Grid item md={9} className='content'>
+    <Grid container className="content" spacing={2} justifyContent="center">
+      <Grid item md={9} className="content">
         {children}
       </Grid>
     </Grid>
@@ -22,6 +17,6 @@ export default function Layout(props) {
 Layout.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+    PropTypes.node
+  ]).isRequired
 }

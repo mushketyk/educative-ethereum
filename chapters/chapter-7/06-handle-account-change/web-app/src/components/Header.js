@@ -8,37 +8,31 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import React from 'react'
 
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <AppBar position='static'>
+    <AppBar position="static">
       <Toolbar>
-        <Box display='flex' flexGrow={1}>
-          <Stack direction='row' spacing={2} alignItems='center'>
-            <Typography variant='h6' >
-              Web3 Auction
-            </Typography>
+        <Box display="flex" flexGrow={1}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Typography variant="h6">Web3 Auction</Typography>
             <ButtonGroup
-              variant='contained'
-              aria-label='outlined primary button group'>
-
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
               <Button
-                variant='contained'
-                size='medium'
+                variant="contained"
+                size="medium"
                 startIcon={<HomeIcon />}
                 component={Link}
-                to='/'
+                to="/"
               >
                 Home
               </Button>
             </ButtonGroup>
-
           </Stack>
         </Box>
-
       </Toolbar>
     </AppBar>
   )

@@ -11,9 +11,10 @@ import Layout from './components/Layout'
 import NotFound from './components/NotFound'
 import RequireWallet from './components/RequireWallet'
 
+// Configure CSS
 const cache = createCache({
   key: 'css',
-  prepend: true,
+  prepend: true
 })
 
 const theme = createTheme({
@@ -28,21 +29,21 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CacheProvider value={cache}>
-        <div className='App'>
+        <div className="App">
           <CssBaseline />
           <Header />
           <Layout>
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/auctions/:address' element={
-                <RequireWallet>
-                  <Auction />
-                </RequireWallet>
-              } />
+              <Route path="/" element={<Home />} />
               <Route
-                path='*'
-                element={<NotFound />}
+                path="/auctions/:address"
+                element={
+                  <RequireWallet>
+                    <Auction />
+                  </RequireWallet>
+                }
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
         </div>

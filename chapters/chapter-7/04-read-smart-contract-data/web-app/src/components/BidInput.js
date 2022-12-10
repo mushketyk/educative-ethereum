@@ -1,19 +1,21 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/TextField';
-import React, { useState } from 'react';
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import OutlinedInput from '@mui/material/TextField'
+import React, { useState } from 'react'
 
 export default function BidInput(props) {
   const [bidAmount, setBidAmount] = useState('')
 
-  const {contractState} = props
+  const { contractState } = props
 
   function isValidNumber(num) {
-    return !isNaN(num);
+    return !isNaN(num)
   }
 
   function canBeWinningBid() {
-    return Number(bidAmount) + contractState.accountBid > contractState.highestBid
+    return (
+      Number(bidAmount) + contractState.accountBid > contractState.highestBid
+    )
   }
 
   const validBid = isValidNumber(bidAmount) && canBeWinningBid()
@@ -24,20 +26,20 @@ export default function BidInput(props) {
         <OutlinedInput
           value={bidAmount}
           onChange={(event) => setBidAmount(event.target.value)}
-          label='Amount'
+          label="Amount"
           fullWidth
           error={bidAmount !== '' && !validBid}
         />
       </Box>
 
       <Button
-        variant='contained'
+        variant="contained"
         onClick={() => {
           alert('TODO: Implement bidding')
         }}
         disabled={bidAmount === '' || !validBid}
       >
-        Contribute
+        Bid
       </Button>
     </>
   )
