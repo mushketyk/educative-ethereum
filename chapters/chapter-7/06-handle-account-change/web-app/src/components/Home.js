@@ -12,7 +12,6 @@ export default function Auction() {
     <>
       <Box sx={{ my: 2 }}>
         <OutlinedInput
-          id='outlined-adornment-amount'
           value={address}
           onChange={(event) => setAddress(event.target.value)}
           label="Address"
